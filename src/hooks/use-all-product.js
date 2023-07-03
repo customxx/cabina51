@@ -1,17 +1,16 @@
 import { graphql, useStaticQuery } from "gatsby"
 
 const useAllProduct = () => {
-  const {
-    allContentfulProduct: { nodes },
-  } = useStaticQuery(graphql`
-    query allProductLinksQuery {
+  const data = useStaticQuery(graphql`
+    query {
       allContentfulProduct(sort: { fields: createdAt, order: DESC }) {
         nodes {
           title
-          gatsbyPath(filePath: "/products/{contentfulProduct.sku}")
-          introduction
           sku
           price
+          introduction {
+            introduction
+          }
           description {
             raw
           }
@@ -27,7 +26,7 @@ const useAllProduct = () => {
     }
   `)
 
-  return nodes
+  return data.allContentfulProduct.nodes
 }
 
 export default useAllProduct
